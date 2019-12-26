@@ -9,9 +9,22 @@ int main() {
 	//  We use a string identity for ease here
 	client.connect("tcp://localhost:5671");
 
-	s_send(client, "ready");
-	std::string reply = s_recv(client);
-	std::cout << "Receive reply: " << reply << std::endl;
+	for (int i = 0; i<3;++i)
+	{
+		std::cout << "**********************************************"<< std::endl;
+		s_send(client, "ready");
+		std::string reply = s_recv(client);
+		std::cout << "Receive reply: " << reply << std::endl;
+
+		int work = std::stoi(reply);
+
+		for (; work < 20; ++work) {
+			std::cout << "work: " << work << std::endl;
+			Sleep(500);
+		}
+		std::cout << "**********************************************" << std::endl;
+	}
+
 
 	system("pause");
 

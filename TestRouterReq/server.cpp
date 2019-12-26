@@ -7,11 +7,15 @@ int main() {
 	zmq::socket_t server(context, ZMQ_REP);
 
 	//  We use a string identity for ease here
-	server.connect("tcp://localhost:5671");
+	server.bind("tcp://*:5671");
 
-	std::string reply = s_recv(server);
-	std::cout << "Receive request: " << reply << std::endl;
-	s_send(server, "do your work");
+	int work = 0;
+	while (true)
+	{
+		std::string reply = s_recv(server);
+		std::cout << "Receive request: " << reply << std::endl;
+		s_send(server, std::to_string(work));
+	}
 
 	system("pause");
 
